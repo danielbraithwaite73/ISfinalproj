@@ -1,0 +1,94 @@
+/* General Body Styling */
+body {
+    font-family: 'Pacifico', cursive;
+    color: black;
+    background-color: rgb(94, 86, 76);
+}
+
+/* Header Styling */
+h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(189, 189, 189);
+    font-size: 5rem;
+}
+
+/* Image Styling */
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Common Class - Base Layout */
+.common {
+    position: absolute;
+    padding: 5px;
+    margin: 5px;
+}
+
+/* Footer Styling */
+.bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-style: italic;
+    background-color: rgb(64, 63, 63);
+    font-size: 70%;
+    color: rgb(189, 189, 189);
+}
+
+/* Top Section Styling */
+.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+/* Main Content Area Styling */
+.content {
+    top: 150px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+}
+
+/* Navigation Bar Styling */
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(64, 63, 63);
+    padding: 10px;
+    z-index: 1;
+}
+
+.nav a {
+    color: rgb(189, 189, 189);
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
+
+.tableauWrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Aspect ratio of 16:9 (can be adjusted based on your visualization's aspect ratio) */
+}
+
+.tableauWrapper .tableauPlaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.tableauViz {
+    width: 100% !important;   /* Ensure the iframe stretches to full width */
+    height: 100% !important;  /* Ensure the iframe stretches to full height */
+}

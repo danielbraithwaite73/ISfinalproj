@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .text-box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+    .text-box span {
+      padding: 0 2px;
+    }
+    .text-box .incorrect {
+      background: #ffc9c9;
+    }
+    #input-box {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background: #0056b3;
+    }
+    #results {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Typing Speed Test</h1>
+    <div class="text-box" id="text-box"></div>
+    <input type="text" id="input-box" placeholder="Start typing here..." disabled>
+    <button class="button" id="start-button">Start Test</button>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const sampleText = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Typing tests are fun and a great way to improve your speed.",
+      "Practice makes perfect, so keep typing and improve every day.",
+      "JavaScript, HTML, and CSS make web development exciting!",
+      "Learning to type quickly will save you time in the long run.",
+      "Typing accuracy is just as important as typing speed.",
+      "Consistent practice helps you become a better and faster typist.",
+      "The best way to improve typing speed is to type every single day.",
+      "Keyboard shortcuts can significantly enhance your productivity.",
+      "Focus on proper technique and let speed come naturally over time."
+    ];
+    const textBox = document.getElementById("text-box");
+    const inputBox = document.getElementById("input-box");
+    const startButton = document.getElementById("start-button");
+    const results = document.getElementById("results");
+
+    let timer;
+    let startTime;
+    let currentText = "";
+
+    // Start the test
+    startButton.addEventListener("click", () => {
+      // Reset everything
+      clearInterval(timer);
+      inputBox.value = "";
+      results.textContent = "";
+      inputBox.disabled = false;
+      inputBox.focus();
+
+      // Display a random text
+      currentText = sampleText[Math.floor(Math.random() * sampleText.length)];
+      textBox.innerHTML = currentText
+        .split("")
+        .map((char) => `<span>${char}</span>`)
+        .join("");
+
+      // Start the timer
+      startTime = Date.now();
+      timer = setInterval(() => {
+        const timeElapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+        results.textContent = `Time elapsed: ${timeElapsed} seconds`;
+      }, 100);
+    });
+
+    // Handle input
+    inputBox.addEventListener("input", () => {
+      const typedText = inputBox.value;
+      const spans = textBox.querySelectorAll("span");
+
+      let correct = true;
+
+      // Check each character
+      spans.forEach((span, index) => {
+        if (typedText[index] === undefined) {
+          span.classList.remove("incorrect");
+        } else if (typedText[index] === span.textContent) {
+          span.classList.remove("incorrect");
+        } else {
+          span.classList.add("incorrect");
+          correct = false;
+        }
+      });
+
+      // If the text is complete and correct
+      if (typedText === currentText && correct) {
+        clearInterval(timer);
+        const timeTaken = (Date.now() - startTime) / 1000; // Time in seconds
+        const wordCount = currentText.split(" ").length;
+        const wpm = Math.round((wordCount / timeTaken) * 60);
+
+        let feedback = "";
+        if (wpm <= 25) {
+          feedback = "You're slow. Keep practicing!";
+        } else if (wpm <= 35) {
+          feedback = "You're alright. Not bad!";
+        } else {
+          feedback = "You're fast! Great job!";
+        }
+
+        results.innerHTML = `
+          You finished in ${timeTaken.toFixed(1)} seconds!<br>
+          Your typing speed is <strong>${wpm} WPM</strong>.<br>
+          ${feedback}
+        `;
+        inputBox.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
